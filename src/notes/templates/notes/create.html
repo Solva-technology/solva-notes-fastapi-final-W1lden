@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Новая заметка{% endblock %}
+
+{% block content %}
+  <div class="panel">
+    <div class="h1">Новая заметка</div>
+    <form method="post" action="/notes/create" class="form">
+      <div class="field">
+        <label>Заголовок</label>
+        <input class="input" type="text" name="title" required>
+      </div>
+      <div class="field">
+        <label>Текст</label>
+        <textarea class="textarea" name="text" rows="10"></textarea>
+      </div>
+      <div class="field">
+        <label>Категории</label>
+        {% if categories and categories|length %}
+          <select class="select" name="category_ids" multiple size="6">
+            {% for c in categories %}
+              <option value="{{ c.id }}">{{ c.name }}</option>
+            {% endfor %}
+          </select>
+          <div class="muted" style="font-size:12px">Зажмите Ctrl/⌘ для выбора нескольких</div>
+        {% else %}
+          <div class="empty">
+            Категорий пока нет. Сохраните заметку без категорий или создайте их в админке.
+            <a href="/admin" target="_blank">Открыть админку</a>
+          </div>
+        {% endif %}
+      </div>
+      <div class="actions">
+        <a href="/notes/" class="btn ghost">Отмена</a>
+        <button type="submit" class="btn">Сохранить</button>
+      </div>
+    </form>
+  </div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Заметка #{{ note.id }}{% endblock %}
+
+{% block content %}
+  <div class="panel">
+    <div class="h1">{{ note.title }}</div>
+    {% if note.categories and note.categories|length %}
+      <div class="note-tags">
+        {% for c in note.categories %}
+          <span class="tag">{{ c.name }}</span>
+        {% endfor %}
+      </div>
+    {% endif %}
+    <div class="note-body" style="margin-top:14px">{{ note.text }}</div>
+    {% if is_owner %}
+      <div class="actions" style="margin-top:16px">
+        <a class="btn" href="/notes/{{ note.id }}/edit">Изменить</a>
+        <form method="post" action="/notes/{{ note.id }}/delete" style="display:inline">
+          <button type="submit" class="btn danger">Удалить</button>
+        </form>
+      </div>
+    {% endif %}
+    <div style="margin-top:12px"><a href="/notes/" class="btn ghost">← К списку</a></div>
+  </div>
+{% endblock %}
